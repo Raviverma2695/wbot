@@ -18,7 +18,7 @@ app.get('/', function (req, res) {
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'Aha_Moment_Labs') {
+    if (req.query['hub.verify_token'] === 'NIEC') {
         res.send(req.query['hub.challenge'])
     }
     res.send('Error, wrong token')
@@ -54,7 +54,7 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-var token = " enter token here"
+var token = "EAABtF8tFt7ABAD6xsy6QK18s27TCPD5dYml3C32J7ZArmAOpus8VRFhZCE5Ts2ldvcO1RhMU5G64ZCTykxiS1txCpbdgjXRQNLre1nTRJrK0wie02ABGmBIZCsaEirUjkv31jihkJLo5D1hfLlcOVwUEtx5DS6pgfksHdSVkliQfyikLJyhc"
 
 // function to echo back messages - added by Stefan
 

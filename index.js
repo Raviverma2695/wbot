@@ -44,15 +44,17 @@ app.post('/webhook', function (req, res) {
     data.entry.forEach(function(entry) {
       var pageID = entry.id;
       var timeOfEvent = entry.time;
+	  console.log("Entry: ", entry);
 
       // Iterate over each messaging event
       entry.messaging.forEach( function(event) {
+		  console.log("Event: ", event);
 		  
 		var sender=event.sender.id;
 		
 		if (event.message) {
 			console.log("Message data: ", event.message);
-			console.log("message tex: ",event.message.text);
+			console.log("message text: ",event.message.text);
 			
 		    if (event.message.text) {
 				var text = event.message.text;

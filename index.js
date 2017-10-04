@@ -56,6 +56,8 @@ app.post('/webhook', function (req, res) {
 			console.log("Message data: ", event.message);
 			console.log("message text: ",event.message.text);
 			
+			processNLP(event.message.nlp);
+			
 		    if (event.message.text) {
 				var text = event.message.text;
 				
@@ -166,4 +168,9 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });  
+}
+
+function processNLP(nlp) {
+	console.log("processing nlp: ",nlp.entities);
+	
 }

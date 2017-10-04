@@ -56,7 +56,8 @@ app.post('/webhook', function (req, res) {
 			console.log("Message data: ", event.message);
 			console.log("message text: ",event.message.text);
 			
-			processNLP(event.message.nlp);
+			var replytext=processNLP(event.message.nlp);
+			sendTextMessage(sender,replytext);
 			
 		    if (event.message.text) {
 				var text = event.message.text;
@@ -172,5 +173,15 @@ function callSendAPI(messageData) {
 
 function processNLP(nlp) {
 	console.log("processing nlp: ",nlp.entities);
+	const greeting = firstEntity(nlp, 'greeting');
+  if (greeting && greeting.confidence > 0.8) {
+    return 'Hi there!';
+  } else { 
+    // default logic
+	return 'Working for better result';
+  }
 	
+}
+function firstEntity(nlp, name) {
+  return nlp && nlp.entities && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }

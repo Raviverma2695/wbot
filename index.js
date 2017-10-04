@@ -83,7 +83,7 @@ function receivedMessage(event) {
 	if (event.postback) {
             text = JSON.stringify(event.postback)
             //sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
+          //  continue
         }
 }
 

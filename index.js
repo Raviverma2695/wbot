@@ -56,7 +56,7 @@ app.post('/webhook', function (req, res) {
 			console.log("Message data: ", event.message);
 			console.log("message text: ",event.message.text);
 			
-			nlp.forEach(nlp) {
+			nlp.forEach(function(nlp)) {
 			var replytext=processNLP(event.message.nlp);
 			sendTextMessage(sender,replytext);
 			}

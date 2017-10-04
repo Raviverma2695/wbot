@@ -72,8 +72,9 @@ function receivedMessage(event) {
   // Putting a stub for now, we'll expand it in the following steps
   
   console.log("Message data: ", event.message);
+  var sender=event.sender.id;
   if (event.message.text) {
-            text = event.message.text
+            var text = event.message.text
             if (text === 'hi') {
                 sendGenericMessage(sender)
                 //continue
@@ -82,7 +83,7 @@ function receivedMessage(event) {
             sendTextMessage(sender, "parrot: " + text.substring(0, 200))
         }
 	if (event.postback) {
-            text = JSON.stringify(event.postback)
+          var  text = JSON.stringify(event.postback)
             //sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
           //  continue
         }

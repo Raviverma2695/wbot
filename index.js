@@ -55,9 +55,9 @@ app.post('/webhook', function (req, res) {
 		if (event.message) {
 			console.log("Message data: ", event.message);
 			console.log("message text: ",event.message.text);
-			
-			nlp.forEach(function(nlp) {
-			var replytext=processNLP(event.message.nlp);
+			var nlp = event.message.nlp;
+			nlp.entities.forEach(function(entities) {
+			var replytext=processNLP(entities);
 			sendTextMessage(sender,replytext);
 			});
 			
@@ -173,10 +173,12 @@ function callSendAPI(messageData) {
   });  
 }
 
-function processNLP(nlp) {
-	console.log("processing nlp: ",nlp.entities);
-	 greeting = firstEntity(nlp, 'greetings');
-	 location = firstEntity(nlp,'location');
+function processNLP(entities) {
+	console.log("processing nlp: ",entities);
+	// greeting = firstEntity(nlp, 'greetings');
+	// location = firstEntity(nlp,'location');
+	greeting=entities.greetings;
+	location = entities.location;
   if (greeting && greeting.confidence > 0.8) {
     return 'Hi there!';
   }

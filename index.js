@@ -124,7 +124,7 @@ var token = "EAAKAyyxIS1kBADvZCrHZC2MXMkuzVZA8t1P4GrXLI9VYwu4Hq2LhON4QA0XFmrezSu
 function sendTextMessage(sender, messageText) {
     messageData = {
     recipient: {
-      id: recipientId
+      id: sender
     },
     message: {
       text: messageText

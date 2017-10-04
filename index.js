@@ -23,25 +23,28 @@ app.get('/privacypolicy', function(req,res) {
 
 
 // for Facebook verification
-/*
-app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'niec') {
-        res.send(req.query['hub.challenge'])
-    } 
-    res.send('Error, wrong token')
-})
- */
+
+// app.get('/webhook/', function (req, res) {
+  //  if (req.query['hub.verify_token'] === 'niec') {
+ //       res.send(req.query['hub.challenge'])
+ //   } 
+//    res.send('Error, wrong token')
+// })
+ 
 
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === 'niec') {
     console.log("Validating webhook");
-    res.status(200).send(req.query['hub.challenge']);
+    res.status(200).send(req.query['hub.challenge'])
   } else {
     console.error("Failed validation. Make sure the validation tokens match.");
     res.sendStatus(403);
 
-// Spin up the server
+	
+  } )
+  
+  // Spin up the server
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })

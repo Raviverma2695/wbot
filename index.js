@@ -52,9 +52,11 @@ app.post('/webhook', function (req, res) {
 		
 		if (event.message) {
 			console.log("Message data: ", event.message);
+			console.log("message tex: ",event.message.text);
 			
 		    if (event.message.text) {
 				var text = event.message.text;
+				
 				if (text === 'hi') {
 					sendGenericMessage(sender,text);
 				}

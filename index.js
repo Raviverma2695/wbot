@@ -121,18 +121,30 @@ var token = "EAAKAyyxIS1kBADvZCrHZC2MXMkuzVZA8t1P4GrXLI9VYwu4Hq2LhON4QA0XFmrezSu
 
 // function to echo back messages - added by Stefan
 
-function sendTextMessage(sender, text) {
+function sendTextMessage(sender, messageText) {
     messageData = {
-        text:text
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: messageText
     }
+  };
     request({
+		/*
         url: 'https://graph.facebook.com/v2.6/me/...',
         qs: {access_token:token},
         method: 'POST',
         json: {
             recipient: {id:sender},
             message: messageData,
-        }
+        } */
+		uri: 'https://graph.facebook.com/v2.6/me/messages',
+		
+		qs: { access_token: token },
+		method: 'POST',
+		json: messageData
+		
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)

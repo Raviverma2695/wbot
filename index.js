@@ -76,8 +76,9 @@ function receivedMessage(event) {
             text = event.message.text
             if (text === 'hi') {
                 sendGenericMessage(sender)
-                continue
+                //continue
             }
+			else
             sendTextMessage(sender, "parrot: " + text.substring(0, 200))
         }
 	if (event.postback) {

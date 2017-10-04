@@ -44,11 +44,11 @@ app.post('/webhook', function (req, res) {
     data.entry.forEach(function(entry) {
       var pageID = entry.id;
       var timeOfEvent = entry.time;
-	  console.log("Entry: ", entry);
+	 // console.log("Entry: ", entry);
 
       // Iterate over each messaging event
       entry.messaging.forEach( function(event) {
-		  console.log("Event: ", event);
+		 // console.log("Event: ", event);
 		  
 		var sender=event.sender.id;
 		
@@ -75,7 +75,7 @@ app.post('/webhook', function (req, res) {
 				sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
 			}
 			else {
-				console.log("Webhook received unknown event: ", event);
+				// console.log("Webhook received unknown event: ", event);
 			}
 		});
 	});

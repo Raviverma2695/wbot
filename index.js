@@ -23,12 +23,23 @@ app.get('/privacypolicy', function(req,res) {
 
 
 // for Facebook verification
+/*
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] === 'niec') {
         res.send(req.query['hub.challenge'])
     } 
     res.send('Error, wrong token')
 })
+ */
+
+app.get('/webhook', function(req, res) {
+  if (req.query['hub.mode'] === 'subscribe' &&
+      req.query['hub.verify_token'] === 'niec') {
+    console.log("Validating webhook");
+    res.status(200).send(req.query['hub.challenge']);
+  } else {
+    console.error("Failed validation. Make sure the validation tokens match.");
+    res.sendStatus(403);
 
 // Spin up the server
 app.listen(app.get('port'), function() {
@@ -60,7 +71,8 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-var token = "EAABtF8tFt7ABAD6xsy6QK18s27TCPD5dYml3C32J7ZArmAOpus8VRFhZCE5Ts2ldvcO1RhMU5G64ZCTykxiS1txCpbdgjXRQNLre1nTRJrK0wie02ABGmBIZCsaEirUjkv31jihkJLo5D1hfLlcOVwUEtx5DS6pgfksHdSVkliQfyikLJyhc"
+
+var token = "EAAKAyyxIS1kBABpyueXgHw9AfmBXRa2AQhVIuZCRuCWWqOa4Tscr8HzlcoBhQUgCAxg3ZAfcfEwj8yyYkwsEpJx3FOHsnKLOODfjNcjUbEZAg1VcoyUjYoXBcmftsyYKGw2ZCGI71rLE8ZCDaZBxHkFFqA1PiJD7dPG5cQouPSgRgb5kBH0y34"
 
 // function to echo back messages - added by Stefan
 

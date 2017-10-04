@@ -55,11 +55,11 @@ app.post('/webhook', function (req, res) {
 		if (event.message) {
 			console.log("Message data: ", event.message);
 			console.log("message text: ",event.message.text);
-			nlp =  event.message.nlp;
+			/*nlp =  event.message.nlp;
 			
 			var replytext=processNLP(nlp);
 			sendTextMessage(sender,replytext);
-	
+	*/
 			
 		    if (event.message.text) {
 				var text = event.message.text;

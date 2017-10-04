@@ -173,7 +173,7 @@ function callSendAPI(messageData) {
 
 function processNLP(nlp) {
 	console.log("processing nlp: ",nlp.entities);
-	const greeting = firstEntity(nlp, 'greeting');
+	 greeting = firstEntity(nlp, 'greetings');
   if (greeting && greeting.confidence > 0.8) {
     return 'Hi there!';
   } else { 

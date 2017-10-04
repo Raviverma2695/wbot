@@ -21,7 +21,6 @@ app.get('/privacypolicy', function(req,res) {
 	res.sendFile('privacypolicy.htm', {root: __dirname })
 })
 
-
 // for Facebook verification
 app.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === 'niec') {
@@ -29,9 +28,6 @@ app.get('/webhook', function (req, res) {
     } 
     res.send('Error, wrong token')
 })
-
-
-
 
 // Spin up the server
 app.listen(app.get('port'), function() {
@@ -51,9 +47,28 @@ app.post('/webhook', function (req, res) {
 
       // Iterate over each messaging event
       entry.messaging.forEach(function(event) {
+		  
+		  var sender=event.sender.id;
         if (event.message) {
-          receivedMessage(event);
-        } else {
+			
+          console.log("Message data: ", event.message);
+		  
+		  if (event.message.text) {
+            var text = event.message.text
+            if (text === 'hi') {
+                sendGenericMessage(sender,text);
+                //continue
+            }
+			else
+            sendTextMessage(sender, "Repeat: " + text.substring(0, 200))
+			}
+        } 
+		else if(event.postback) {
+			var  text = JSON.stringify(event.postback)
+            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+          //  continue
+		}
+		else {
           console.log("Webhook received unknown event: ", event);
         }
       });
@@ -67,7 +82,7 @@ app.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
-
+/*
 function receivedMessage(event) {
   // Putting a stub for now, we'll expand it in the following steps
   
@@ -88,6 +103,7 @@ function receivedMessage(event) {
           //  continue
         }
 }
+*/
 
 // API End Point - added by Stefan
 /*
@@ -121,6 +137,54 @@ var token = "EAAKAyyxIS1kBADvZCrHZC2MXMkuzVZA8t1P4GrXLI9VYwu4Hq2LhON4QA0XFmrezSu
 
 // function to echo back messages - added by Stefan
 
+function sendGenericMessage(recipientId, messageText) {
+  // To be expanded in later sections
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            title: "rift",
+            subtitle: "Next-generation virtual reality",
+            item_url: "https://www.oculus.com/en-us/rift/",               
+            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.oculus.com/en-us/rift/",
+              title: "Open Web URL"
+            }, {
+              type: "postback",
+              title: "Call Postback",
+              payload: "Payload for first bubble",
+            }],
+          }, {
+            title: "touch",
+            subtitle: "Your Hands, Now in VR",
+            item_url: "https://www.oculus.com/en-us/touch/",               
+            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.oculus.com/en-us/touch/",
+              title: "Open Web URL"
+            }, {
+              type: "postback",
+              title: "Call Postback",
+              payload: "Payload for second bubble",
+            }]
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
 function sendTextMessage(sender, messageText) {
     messageData = {
     recipient: {
@@ -130,32 +194,33 @@ function sendTextMessage(sender, messageText) {
       text: messageText
     }
   };
-    request({
-		/*
-        url: 'https://graph.facebook.com/v2.6/me/...',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        } */
-		uri: 'https://graph.facebook.com/v2.6/me/messages',
-		
-		qs: { access_token: token },
-		method: 'POST',
-		json: messageData
-		
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+    callSendAPI(messageData);
 }
 
+function callSendAPI(messageData) {
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: token },
+    method: 'POST',
+    json: messageData
+
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      console.log("Successfully sent generic message with id %s to recipient %s", 
+        messageId, recipientId);
+    } else {
+      console.error("Unable to send message.");
+      console.error(response);
+      console.error(error);
+    }
+  });  
+}
 
 // Send an test message back as two cards.
+/*
 
 function sendGenericMessage(sender) {
     messageData = {
@@ -234,6 +299,8 @@ function sendGenericMessage(sender) {
         }
     })
 }
+
+*/
 
 
   

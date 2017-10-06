@@ -172,7 +172,7 @@ function callSendAPI(messageData) {
     }
   });  
 }
-
+/*
 function processNLP(nlp) {
 	console.log("processing nlp: ",nlp.entities);
 	 greeting = firstEntity(nlp, 'greetings');
@@ -256,12 +256,21 @@ const wit = new Wit({
   logger: new log.Logger(log.INFO)
 });
 
-// Starting our webserver and putting it all together
-const app = express();
-app.use(({method, url}, rsp, next) => {
-  rsp.on('finish', () => {
-    console.log(`${rsp.statusCode} ${method} ${url}`);
-  });
-  next();
+
+var apiai = require('apiai');
+ 
+var app = apiai("<your client access token>");
+ 
+var request = app.textRequest('<Your text query>', {
+    sessionId: '<unique session id>'
 });
-app.use(bodyParser.json({ verify: verifyRequestSignature }));
+ 
+request.on('response', function(response) {
+    console.log(response);
+});
+ 
+request.on('error', function(error) {
+    console.log(error);
+});
+ 
+request.end(); */

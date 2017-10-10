@@ -34,6 +34,14 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'));
 });
 
+const host = 'api.worldweatheronline.com';
+const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
+
+app.post('/weatherfetch',function(req,res) {
+	
+	
+});
+
 app.post('/webhook', function (req, res) {
   var data = req.body;
 

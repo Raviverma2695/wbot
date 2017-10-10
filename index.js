@@ -25,10 +25,13 @@ app.listen(app.get('port'), function() {
 
 const host = 'api.worldweatheronline.com';
 const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
+console.log(host , wwoApiKey);
 
 app.post('/weatherfetch',function(req,res) {
 	
+	
 	let city = req.body.result.parameters['geo-city']; // city is a required param
+	console.log(city);
   // Get the date for the weather forecast (if present)
   let date = '';
   if (req.body.result.parameters['date']) {

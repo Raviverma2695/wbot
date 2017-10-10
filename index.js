@@ -30,6 +30,7 @@ console.log(host);
 app.post('/weatherfetch',function(req,res) {
 	
 	
+	/*
 	let city = req.body.result.parameters['geo-city']; // city is a required param
 	console.log(city);
   // Get the date for the weather forecast (if present)
@@ -47,7 +48,14 @@ app.post('/weatherfetch',function(req,res) {
     // If there is an error let the user know
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ 'speech': error, 'displayText': error }));
-  });
+  }); */
+  
+  
+ var jsdata=http.get(
+  
+ "https://api.worldweatheronline.com/premium/v1/weather.ashx?key=7eabf4ed0b8949368ac13125171010&q=Delhi&format=json"
+ );
+  
 });
 
 

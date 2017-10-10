@@ -25,7 +25,7 @@ app.listen(app.get('port'), function() {
 
 const host = 'api.worldweatheronline.com';
 const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
-console.log(host , wwoApiKey);
+console.log(host);
 
 app.post('/weatherfetch',function(req,res) {
 	

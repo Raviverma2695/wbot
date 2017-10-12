@@ -11,11 +11,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var express = require('express');
+var bodyParser = require('body-parser');
+var request = require('request');
+var app = express();
+
+app.set('port', (process.env.PORT || 5000));
+
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}));
+
+// Process application/json
+app.use(bodyParser.json());
+
+// Index route
+app.get('/', function (req, res) {
+    res.send('Hello world, I am a chat bot');
+});
+
+
+
+// Spin up the server
+app.listen(app.get('port'), function() {
+    console.log('running on port', app.get('port'));
+});
 'use strict';
 const http = require('http');
 const host = 'api.worldweatheronline.com';
 const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
-exports.weatherWebhook = (req, res) => {
+
+app.post('/weatherWebhook,function(req,res) {
   // Get the city and date from the request
   let city = req.body.result.parameters['geo-city']; // city is a required param
   // Get the date for the weather forecast (if present)
@@ -34,7 +59,9 @@ exports.weatherWebhook = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ 'speech': error, 'displayText': error }));
   });
-};
+});
+
+
 function callWeatherApi (city, date) {
   return new Promise((resolve, reject) => {
     // Create the path for the HTTP request to get the weather

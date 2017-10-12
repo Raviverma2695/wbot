@@ -1,23 +1,38 @@
-// Copyright 2017, Google, Inc.
-// Licensed under the Apache License, Version 2.0 (the 'License');
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an 'AS IS' BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+var express = require('express');
+var bodyParser = require('body-parser');
+var request = require('request');
+var app = express();
 
-'use strict';
-const http = require('http');
+app.set('port', (process.env.PORT || 5000));
+
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}));
+
+// Process application/json
+app.use(bodyParser.json());
+
+// Index route
+app.get('/', function (req, res) {
+    res.send('Hello world, I am a chat bot');
+});
+
+
+
+// Spin up the server
+app.listen(app.get('port'), function() {
+    console.log('running on port', app.get('port'));
+});
+
 const host = 'api.worldweatheronline.com';
 const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
-exports.weatherWebhook = (req, res) => {
-  // Get the city and date from the request
-  let city = req.body.result.parameters['geo-city']; // city is a required param
+console.log(host);
+
+app.post('/weatherfetch',function(req,res) {
+	
+	
+	/*
+	let city = req.body.result.parameters['geo-city']; // city is a required param
+	console.log(city);
   // Get the date for the weather forecast (if present)
   let date = '';
   if (req.body.result.parameters['date']) {
@@ -33,8 +48,17 @@ exports.weatherWebhook = (req, res) => {
     // If there is an error let the user know
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ 'speech': error, 'displayText': error }));
-  });
-};
+  }); */
+  
+  
+ var jsdata=http.get(
+  
+ "https://api.worldweatheronline.com/premium/v1/weather.ashx?key=7eabf4ed0b8949368ac13125171010&q=Delhi&format=json"
+ );
+  
+});
+
+
 function callWeatherApi (city, date) {
   return new Promise((resolve, reject) => {
     // Create the path for the HTTP request to get the weather
@@ -55,8 +79,8 @@ function callWeatherApi (city, date) {
         // Create response
         let output = `Current conditions in the ${location['type']} 
         ${location['query']} are ${currentConditions} with a projected high of
-        ${forecast['maxtempC']}캜 or ${forecast['maxtempF']}캟 and a low of 
-        ${forecast['mintempC']}캜 or ${forecast['mintempF']}캟 on 
+        ${forecast['maxtempC']}째C or ${forecast['maxtempF']}째F and a low of 
+        ${forecast['mintempC']}째C or ${forecast['mintempF']}째F on 
         ${forecast['date']}.`;
         // Resolve the promise with the output text
         console.log(output);
@@ -68,3 +92,5 @@ function callWeatherApi (city, date) {
     });
   });
 }
+
+

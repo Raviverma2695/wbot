@@ -42,7 +42,8 @@ const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
 
 app.post('/weatherWebhook',function(req,res) {
   // Get the city and date from the request
-  let city = req.body.result.parameters['geo-city']; // city is a required param
+ // let city = req.body.result.parameters['geo-city']; // city is a required param
+  let city = req.body.result.parameters.address['city'];
   // Get the date for the weather forecast (if present)
   let date = '';
   if (req.body.result.parameters['date']) {

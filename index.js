@@ -18,6 +18,9 @@ app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot');
 });
 
+app.get('/privacypolicy', function(req,res) {
+ res.sendFile('privacypolicy.htm', {root: __dirname })
+ });
 
 
 

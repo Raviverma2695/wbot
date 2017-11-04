@@ -78,7 +78,7 @@ function callWeatherApi (city, date) {
 		
 		
 		let output = `Current conditions in the ${location['type']} 
-        ${location['query']} are ${currentConditions} with temperature ${conditions['temp_C']} c on 
+        ${location['query']} is ${currentConditions} with temperature ${conditions['temp_C']} c on 
         ${forecast['date']}.`;
        
         console.log(output);

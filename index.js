@@ -75,13 +75,13 @@ function callWeatherApi (city, date) {
        
         // let output = `Current conditions in the ${location['type']} 
        // ${location['query']} are ${currentConditions} with a projected high of
-       // ${forecast['maxtempC']}캜 or ${forecast['maxtempF']}캟 and a low of 
-       // ${forecast['mintempC']}캜 or ${forecast['mintempF']}캟 on 
+       // ${forecast['maxtempC']}째C or ${forecast['maxtempF']}째F and a low of 
+       // ${forecast['mintempC']}째C or ${forecast['mintempF']}째F on 
        // ${forecast['date']}.`;
 		
 		
 		let output = `Current conditions in the ${location['type']} 
-        ${location['query']} is ${currentConditions} with temperature ${conditions['temp_C']} c on 
+        ${location['query']} is ${currentConditions} with temperature ${conditions['temp_C']} 째C on 
         ${forecast['date']}.`;
        
         console.log(output);

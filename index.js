@@ -27,6 +27,7 @@ app.get('/privacypolicy', function(req,res) {
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'));
 });
+
 'use strict';
 const http = require('http');
 const host = 'api.worldweatheronline.com';
@@ -34,7 +35,9 @@ const wwoApiKey = '7eabf4ed0b8949368ac13125171010';
 
 app.post('/weatherWebhook',function(req,res) {
   
-  let city = req.body.result.parameters.address['city'];
+	let city='';
+	if(req.body.result.parameters.address['city'])
+  city = req.body.result.parameters.address['city'];
  
   let date = '';
  
@@ -43,6 +46,8 @@ app.post('/weatherWebhook',function(req,res) {
     console.log('Date: ' + date);
   }
   
+	if(city=='') res.send(JSON.stringify({ 'speech': 'try again', 'displayText': 'Please try again' }));
+	else
   callWeatherApi(city, date).then((output) => {
     
     res.setHeader('Content-Type', 'application/json');
